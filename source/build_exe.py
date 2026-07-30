@@ -37,7 +37,33 @@ def build_executable() -> None:
     WORK.mkdir(parents=True, exist_ok=True)
 
     # Absolute path — --add-data is resolved relative to --specpath otherwise.
-    readme_data = f"{ROOT / 'README.md'}{os.pathsep}."
+    readme_src = PROJECT / "README.md"
+    readme_data = f"{readme_src}{os.pathsep}."
+
+    excludes = [
+        "IPython",
+        "ipykernel",
+        "ipywidgets",
+        "jupyter",
+        "jupyter_client",
+        "jupyter_core",
+        "nbformat",
+        "notebook",
+        "matplotlib",
+        "PIL",
+        "PySide6",
+        "PyQt5",
+        "PyQt6",
+        "shiboken6",
+        "tkinter",
+        "_tkinter",
+        "jedi",
+        "parso",
+        "zmq",
+        "tornado",
+        "sphinx",
+        "pytest",
+    ]
 
     cmd = [
         sys.executable,
@@ -52,10 +78,11 @@ def build_executable() -> None:
         f"--workpath={WORK}",
         f"--specpath={PROJECT / 'build'}",
         f"--add-data={readme_data}",
-        "--collect-all=dash",
-        "--collect-all=plotly",
+        # Datas only where needed — full collect-all pulls IPython/Qt/etc. via pandas.
+        "--collect-data=dash",
+        "--collect-data=plotly",
         "--collect-all=rs3",
-        "--collect-all=grpc",
+        "--collect-submodules=grpc",
         "--collect-submodules=tunnel_viz",
         "--hidden-import=tunnel_viz",
         "--hidden-import=tunnel_viz.web_app",
@@ -66,8 +93,12 @@ def build_executable() -> None:
         "--hidden-import=tunnel_viz.result_types",
         "--hidden-import=plotly.graph_objs",
         "--hidden-import=plotly.subplots",
-        "run_tunnel_viewer.py",
+        "--hidden-import=dash",
+        "--hidden-import=flask",
     ]
+    for mod in excludes:
+        cmd.append(f"--exclude-module={mod}")
+    cmd.append("run_tunnel_viewer.py")
 
     print(f"Running:\n  {' '.join(cmd)}\n")
     print(f"Output folder: {RELEASE}")
@@ -75,7 +106,7 @@ def build_executable() -> None:
 
     subprocess.check_call(cmd, cwd=ROOT)
 
-    shutil.copy2(ROOT / "README.md", RELEASE / "README.md")
+    shutil.copy2(readme_src, RELEASE / "README.md")
     (RELEASE / "HOW_TO_RUN.txt").write_text(
         "\n".join(
             [

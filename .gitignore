@@ -23,7 +23,7 @@ ENV/
 build/
 *.spec
 
-# Release binaries (docs in release/ can still be tracked)
+# Release binaries — do NOT commit (GitHub 100 MB limit; rebuild with build_exe.py)
 release/*.exe
 release/*.exe.bak
 
@@ -49,4 +49,5 @@ Desktop.ini
 *.temp
 .cache/
 
+# Large RS3 example compute outputs (keep models out of accidental commits if desired)
 examples/

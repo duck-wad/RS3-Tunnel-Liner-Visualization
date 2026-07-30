@@ -26,16 +26,44 @@ python run_tunnel_viewer.py "path\to\model.rs3v3" --auto --field moment_y --coor
 
 ## Requirements
 
-- Python 3.10+
+- Python 3.10+ (for development / building the exe)
 - RS3 with scripting (`RS3Scripting`, matched to your RS3 version)
 - Packages in `requirements.txt`
 
 ## Windows executable
 
-From `source/`:
+### Build
+
+Requires Python with the project dependencies and PyInstaller installed:
 
 ```bash
+cd source
+pip install -r requirements.txt
+pip install pyinstaller
 python build_exe.py
 ```
 
-Creates `release/TunnelVisualization.exe` (plus `HOW_TO_RUN.txt`). Recipients need RS3 installed; they do not need Python.
+This writes:
+
+- `release/TunnelVisualization.exe`
+- `release/HOW_TO_RUN.txt`
+- `release/README.md`
+
+The `.exe` is gitignored (too large for GitHub). Keep it local or attach it to a [GitHub Release](https://docs.github.com/en/repositories/releasing-projects-on-github).
+
+### Run (end users)
+
+1. Double-click `release/TunnelVisualization.exe`  
+   — or from a terminal: `release\TunnelVisualization.exe`
+2. A console window opens and the browser goes to `http://127.0.0.1:8052`
+3. Browse to a computed `.rs3v3`, choose field/coords/stage, then **Extract from RS3**
+
+RS3 must be installed on the machine; Python is not required to run the exe.
+
+Optional CLI (same flags as the Python launcher):
+
+```bash
+TunnelVisualization.exe "C:\path\to\model.rs3v3" --auto
+```
+
+Close the console window (or Ctrl+C) to stop the viewer.
