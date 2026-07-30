@@ -1,0 +1,7 @@
+# Match this to your installed RS3 version, e.g. 4.042.0 / 4.043.0
+RS3Scripting>=4.042.0
+numpy>=1.24.0
+pandas>=2.0.0
+plotly>=5.18.0
+scipy>=1.11.0
+dash>=2.14

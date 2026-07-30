@@ -1,0 +1,52 @@
+﻿# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# PyInstaller / local builds
+build/
+*.spec
+
+# Release binaries (docs in release/ can still be tracked)
+release/*.exe
+release/*.exe.bak
+
+# Old / local data dumps
+**/contours/
+*.xlsx
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs / temp
+*.log
+*.tmp
+*.temp
+.cache/
+
+examples/
